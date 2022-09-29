@@ -1,18 +1,18 @@
 package com.likelionswu.backend_1hw.post.domain;
 
+import com.likelionswu.backend_1hw.post.dto.InfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-        import lombok.NoArgsConstructor;
-        import org.hibernate.annotations.CreationTimestamp;
-        import org.hibernate.annotations.UpdateTimestamp;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-        import javax.persistence.*;
-        import java.sql.Timestamp;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Info extends BaseTimeEntity {
 
@@ -32,11 +32,6 @@ public class Info extends BaseTimeEntity {
     @Column(length= 100, nullable = false)
     private String intro;
 
-    @CreationTimestamp
-    private Timestamp createdAt;
-
-    @UpdateTimestamp
-    private Timestamp updatedAt;
 
     @Builder
     public Info(Long id, String name, Integer age, String major, String intro){
@@ -45,5 +40,12 @@ public class Info extends BaseTimeEntity {
         this.age = age;
         this.major = major;
         this.intro = intro;
+    }
+
+    public void update(InfoDto infoDto) {
+        this.name = infoDto.getName();
+        this.age = infoDto.getAge();
+        this.major = infoDto.getMajor();
+        this.intro = infoDto.getIntro();
     }
 }

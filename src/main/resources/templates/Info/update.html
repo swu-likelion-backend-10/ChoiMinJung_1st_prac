@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>인적사항 수정 페이지</title>
+</head>
+<body>
+<form th:action="@{'/enroll/edit/' + ${infoDto.id}}" th:method="put">
+
+  이름 : <input type="text" name="name" th:value="${infoDto.name}"><br>
+  나이 : <input type="number" name="age" th:value="${infoDto.age}"><br>
+  학과 : <input type="text" name="major" th:value="${infoDto.major}"><br>
+  간단한 자기소개
+  <textarea name="intro">[[${infoDto.intro}]]</textarea><br>
+
+  <input type="submit" value="수정">
+</form>
+
+</body>
+</html>

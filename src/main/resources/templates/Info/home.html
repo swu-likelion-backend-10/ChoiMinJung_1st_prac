@@ -7,5 +7,32 @@
 <body>
     <h1>인적사항 등록하러 가기!</h1>
     <a th:href="@{/enroll}">클릭</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="info : ${infoList}">
+            <td>
+                <span th:text="${info.id}"></span>
+            </td>
+            <td>
+                <a th:href="@{'/enroll/' + ${info.id}}">
+                    <span th:text="${info.name}"></span>
+                </a>
+            </td>
+            <td>
+                <span th:text="${#temporals.format(info.createdTime, 'yyyy-MM-dd HH:mm')}"></span>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
 </body>
 </html>

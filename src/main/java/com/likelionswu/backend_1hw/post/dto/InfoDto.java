@@ -2,9 +2,11 @@ package com.likelionswu.backend_1hw.post.dto;
 
 import com.likelionswu.backend_1hw.post.domain.Info;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Getter
 public class InfoDto {
 
     private Long id;
