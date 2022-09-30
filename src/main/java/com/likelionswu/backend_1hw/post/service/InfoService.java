@@ -9,27 +9,28 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InfoService {
 
     private final InfoRepository infoRepository;
 
-    public InfoService(InfoRepository infoRepository){
+    public InfoService(InfoRepository infoRepository) {
         this.infoRepository = infoRepository;
     }
 
     @Transactional
-    public Long savePost(InfoDto infoDto){
+    public Long savePost(InfoDto infoDto) {
         return infoRepository.save(infoDto.toEntity()).getId();
     }
 
     @Transactional
-    public List<InfoDto> getInfoList(){
+    public List<InfoDto> getInfoList() {
         List<Info> infos = infoRepository.findAll();
         List<InfoDto> infoDtoList = new ArrayList<>();
 
-        for (Info info : infos){
+        for (Info info : infos) {
             InfoDto infoDto = InfoDto.builder()
                     .id(info.getId())
                     .name(info.getName())
@@ -46,7 +47,7 @@ public class InfoService {
     }
 
     @Transactional
-    public InfoDto getPost(Long id){
+    public InfoDto getPost(Long id) {
         Optional<Info> infoWrapper = infoRepository.findById(id);
         Info info = infoWrapper.get();
 
@@ -64,16 +65,42 @@ public class InfoService {
     }
 
     @Transactional
-    public Long updatePost(Long id, InfoDto infoDto){
+    public Long updatePost(Long id, InfoDto infoDto) {
         Info info = infoRepository.findById(id).orElseThrow(()
-                ->new IllegalArgumentException("해당 인적사항은 존재하지 않습니다" + id));
+                -> new IllegalArgumentException("해당 인적사항은 존재하지 않습니다" + id));
         info.update(infoDto);
 
         return id;
     }
 
     @Transactional
-    public void deletePost(Long id){
+    public void deletePost(Long id) {
         infoRepository.deleteById(id);
+    }
+
+    @Transactional
+    public List<InfoDto> searchPosts(String keyword) {
+        List<Info> infos = infoRepository.findByNameContaining(keyword);
+        List<InfoDto> infoDtoList  = new ArrayList<>();
+
+        if (infos.isEmpty()) return infoDtoList ;
+
+        for (Info info : infos) {
+            infoDtoList .add(this.convertEntityToDto(info));
+        }
+
+        return infoDtoList;
+    }
+
+    private InfoDto convertEntityToDto(Info info) {
+        return InfoDto.builder()
+                .id(info.getId())
+                .name(info.getName())
+                .age(info.getAge())
+                .major(info.getMajor())
+                .intro(info.getIntro())
+                .createdTime(info.getCreatedTime())
+                .modifiedTime(info.getModifiedTime())
+                .build();
     }
 }

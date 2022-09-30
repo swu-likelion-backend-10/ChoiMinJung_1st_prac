@@ -1,6 +1,7 @@
 package com.likelionswu.backend_1hw.post.controller;
 
 
+import com.likelionswu.backend_1hw.post.domain.Info;
 import com.likelionswu.backend_1hw.post.dto.InfoDto;
 import com.likelionswu.backend_1hw.post.service.InfoService;
 import org.springframework.stereotype.Controller;
@@ -61,5 +62,15 @@ public class InfoController {
     public String delete(@PathVariable("no") Long id){
         infoService.deletePost(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam(value="keyword") String keyword, Model model)  {
+
+        List<InfoDto> infoDtoList = infoService.searchPosts(keyword);
+
+        model.addAttribute("infoList", infoDtoList);
+
+        return "Info/home.html";
     }
 }

@@ -5,8 +5,16 @@
     <title>메인 홈 화면</title>
 </head>
 <body>
-    <h1>인적사항 등록하러 가기!</h1>
-    <a th:href="@{/enroll}">클릭</a>
+    <div>
+        <h1>인적사항 등록하러 가기!</h1>
+        <a th:href="@{/enroll}">클릭</a>
+    </div>
+    <br>
+
+    <form action="/search" method="GET">
+        <input name="keyword" type="text" placeholder="찾고자하는 이름을 검색하세요">
+        <button>검색</button>
+    </form>
 
     <table>
         <thead>
