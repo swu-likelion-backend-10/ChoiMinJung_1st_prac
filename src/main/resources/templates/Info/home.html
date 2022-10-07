@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>메인 홈 화면</title>
 </head>
 <body>
+    <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}">관리자 페이지</a>
+    <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+    <a sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
+    <br>
     <div>
         <h1>인적사항 등록하러 가기!</h1>
         <a th:href="@{/enroll}">클릭</a>
